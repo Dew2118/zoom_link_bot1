@@ -29,7 +29,7 @@ class Zoom_link:
             'thai':'5110',
             'art':'5224',
             'english':'5204',
-            'selective class':'5274',
+            'english skills selective':'5274',
             'club':'click your own class'}
         self.course_code = subject_code_dict[subject]
         

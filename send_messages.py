@@ -23,7 +23,8 @@ class Send_Message:
             'art':'https://cudplus.onsmart.school/lms/courseHome?course=5224 \n zoom link: {zoom_link}',
             'english':'for high ab: https://cudplus.onsmart.school/lms/courseHome?course=5204 \n zoom link: {zoom_link}',
             'english_no_high_ab':'Please submit information for link. Usually no high ab class here. {zoom_link}',
-            'selective class':'for english skills selective: https://cudplus.onsmart.school/lms/courseHome?course=5274 \n zoom link: {zoom_link} \n else: please get from your own cudplus page \n',
+            'selective class':'Please submit information for link. {zoom_link}',
+            'english skills selective':'for english skills selective: https://cudplus.onsmart.school/lms/courseHome?course=5274 \n zoom link: {zoom_link} \n else: please get from your own cudplus page \n',
             'club':'click your own class',}
     def __init__(self) -> None:
         self.line_bot_api = LineBotApi(extra_byte.lineapi)
@@ -35,11 +36,11 @@ class Send_Message:
     def message_logic(self, i, e, get_lesson,get_time):
         lesson = get_lesson.get_lesson(i)
         if lesson != '':
-            res = get_time.get_time(int(e[:2]),int(e[-2:])-5)
+            res = get_time.get_time(int(e[:2]),int(e[-2:])-4)
             print(e)
             if res == 'pass':
                 return
-            elif lesson == 'english_no_high_ab':
+            elif lesson == 'english_no_high_ab' or lesson == 'selective class':
                 zl = ''
             elif lesson == 'math':
                 zl='https://chula.zoom.us/j/95897429693?pwd=V0pyWmhKZlF6Q2VsTE9pbTBTWGE2QT09#success'
@@ -58,14 +59,14 @@ class Send_Message:
 class Get_lesson:
     lesson_list = [[['','english_no_high_ab','thai','','selective class','selective class','science','',''],
                 ['','math','','Physical Education','selective class','selective class','','science',''],
-                ['homeroom','thai','science','','english','','history','math',''],
-                ['','social','english','art and craft','art','math','selective class','selective class',''],
+                ['homeroom','','science','','english','','history','math',''],
+                ['','social','english','art and craft','art','math','english skills selective','selective class',''],
                 ['','social','selective class','selective class','','','','thai','feedback'],[],[]],
                 [['','english_no_high_ab','thai','','selective class','selective class','science','Health Education',''],
                 ['','math','guide','','selective class','selective class','','science',''],
-                ['homeroom','thai','science','','english','scout','','math',''],
-                ['','social','english','','','math','selective class','selective class',''],
-                ['','','selective class','selective class','design and technology','','music','thai','math','feedback'],[],[]]]
+                ['','','science','','english','scout','history','math',''],
+                ['','social','english','','','math','english skills selective','selective class',''],
+                ['','social','selective class','selective class','design and technology','','music','thai','math','feedback'],[],[]]]
     def __init__(self) -> None:
         self.day = int(datetime.now().weekday())
         self.week = self.get_week()
@@ -120,5 +121,5 @@ class Get_time:
 send_message = Send_Message()
 get_lesson = Get_lesson()
 get_time = Get_time()
-for i,e in enumerate(['08:00','08:30','09:20','10:20','12:00','12:50','13:50','14:40','15:35','17:00']):
+for i,e in enumerate(['08:00','08:30','09:20','10:20','12:00','12:50','13:50','14:40','15:30']):
     send_message.message_logic(i, e, get_lesson, get_time)

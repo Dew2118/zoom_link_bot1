@@ -15,7 +15,7 @@ class Send_Message:
             'art and craft':'https://cudplus.onsmart.school/lms/courseHome?course=5192 \n zoom link: {zoom_link}',
             'guide':'https://cudplus.onsmart.school/lms/courseHome?course=5146 \n zoom link: {zoom_link}',
             'Physical Education':'https://cudplus.onsmart.school/lms/courseHome?course=5178 \n zoom link: {zoom_link}',
-            'music':'music -> https://cudplus.onsmart.school/lms/courseHome?course=5226 \n zoom link: {zoom_link} \n dance class -> https://cudplus.onsmart.school/lms/courseHome?course=5227',
+            'music':'for first half of the class -> https://cudplus.onsmart.school/lms/courseHome?course=5226 \n zoom link: {zoom_link} \n for second half of the class -> https://cudplus.onsmart.school/lms/courseHome?course=5227',
             'Health Education':'https://cudplus.onsmart.school/lms/courseHome?course=5167 \n zoom link: {zoom_link}',
             'design and technology':'https://cudplus.onsmart.school/lms/courseHome?course=5125 \n zoom link: {zoom_link}',
             'math':'https://cudplus.onsmart.school/lms/courseHome?course=5102 \n zoom link: {zoom_link}',
@@ -36,16 +36,18 @@ class Send_Message:
     def message_logic(self, i, e, get_lesson,get_time):
         lesson = get_lesson.get_lesson(i)
         if lesson != '':
-            res = get_time.get_time(int(e[:2]),int(e[-2:])-4)
+            res = get_time.get_time(int(e[:2]),int(e[-2:])-5)
             print(e)
             if res == 'pass':
                 return
-            elif lesson == 'english_no_high_ab' or lesson == 'selective class':
+            elif lesson == 'english_no_high_ab' or lesson == 'selective class' or lesson == 'club':
                 zl = ''
             elif lesson == 'math':
                 zl='https://chula.zoom.us/j/95897429693?pwd=V0pyWmhKZlF6Q2VsTE9pbTBTWGE2QT09#success'
             elif lesson == 'art':
                 zl='https://chula.zoom.us/j/5156980173?pwd=T2NLRXAzK3lTUEV3dHJFSGNKSnU2dz09#success'
+            elif lesson == 'art and craft':
+                zl = 'https://chula.zoom.us/j/98975295276?pwd=STNmTm1sYnZzSlg0ZDdwemtTblhjUT09'
             elif lesson == 'feedback':
                 self.push_message(text='It\'s the end of the week! Please give feedback and suggestion at https://forms.gle/XEqSriTfEPSc2kTA9')
                 return
@@ -59,14 +61,14 @@ class Send_Message:
 class Get_lesson:
     lesson_list = [[['','english_no_high_ab','thai','','selective class','selective class','science','',''],
                 ['','math','','Physical Education','selective class','selective class','','science',''],
-                ['homeroom','','science','','english','','history','math',''],
+                ['homeroom','','science','','english','','history','math','club'],
                 ['','social','english','art and craft','art','math','english skills selective','selective class',''],
-                ['','social','selective class','selective class','','','','thai','feedback'],[],[]],
+                ['','social','selective class','selective class','design and technology','','','thai','feedback'],[],[]],
                 [['','english_no_high_ab','thai','','selective class','selective class','science','Health Education',''],
                 ['','math','guide','','selective class','selective class','','science',''],
                 ['','','science','','english','scout','history','math',''],
                 ['','social','english','','','math','english skills selective','selective class',''],
-                ['','social','selective class','selective class','design and technology','','music','thai','math','feedback'],[],[]]]
+                ['','social','selective class','selective class','design and technology','','music','thai','feedback'],[],[]]]
     def __init__(self) -> None:
         self.day = int(datetime.now().weekday())
         self.week = self.get_week()
